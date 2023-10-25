@@ -33,6 +33,7 @@ jobs:
        - run: |
           echo "Installing dependencies..."
           npm install
+       - setup_remote_docker   
        - run:
           command: echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
        - run:
