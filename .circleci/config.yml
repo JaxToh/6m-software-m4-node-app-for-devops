@@ -29,7 +29,6 @@ jobs:
       steps:
        - setup_remote_docker   
        - checkout
-       - docker/check
        - run:
           command: echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
        - docker/build:
@@ -38,13 +37,7 @@ jobs:
        - docker/push:
           image: jaxtoh/education-space
           tag: <<pipeline.git.tag>>
-      #  - run:
-      #     command: echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-      #  - run:
-      #     name: Build and Push Image
-      #     command: |
-      #       docker build -t jaxtoh/education-space:<<pipeline.git.tag>> .
-      #       docker push jaxtoh/education-space:<<pipeline.git.tag>>
+
   deploy:
       docker:
        - image: cimg/node:16.10
