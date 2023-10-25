@@ -42,19 +42,19 @@ jobs:
           command: |
             docker build -t jaxtoh/education-space:node-app-v1.0.1 .
             docker push jaxtoh/education-space:node-app-v1.0.1
-    deploy:
-        docker:
-        - image: cimg/node:16.10
-        steps:
-        - setup_remote_docker      
-        - heroku/install
-        - checkout
-        - run:
-            name: Heroku Container Push
-            command: | 
-                heroku container:login
-                heroku container:push web -a jaxtoh-su-devops
-                heroku container:release web -a jaxtoh-su-devops  
+    # deploy:
+    #     docker:
+    #     - image: cimg/node:16.10
+    #     steps:
+    #     - setup_remote_docker      
+    #     - heroku/install
+    #     - checkout
+    #     - run:
+    #         name: Heroku Container Push
+    #         command: | 
+    #             heroku container:login
+    #             heroku container:push web -a jaxtoh-su-devops
+    #             heroku container:release web -a jaxtoh-su-devops  
    
 workflows:
   simple_workflow:
@@ -69,6 +69,6 @@ workflows:
           filters:
             branches:
               only: main  
-      - deploy:
-          requires:
-            - build-and-push            
+      # - deploy:
+      #     requires:
+      #       - build-and-push            
