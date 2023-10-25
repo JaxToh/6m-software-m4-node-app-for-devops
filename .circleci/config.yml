@@ -61,24 +61,24 @@ workflows:
   simple_workflow:
     jobs:
       - build
-          filters:
+           filters:
             branches:
               only: main        
       - test:
           requires:
             - build
-          filters:
+           filters:
             branches:
               only: main              
       - build-and-push:
           requires:
             - test
-          filters:
+           filters:
             tags:
               only: /^v./
       - deploy:
           requires:
             - build-and-push
-          filters:
+           filters:
             tags:
               only: /^v./  
