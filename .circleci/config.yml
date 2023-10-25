@@ -22,7 +22,25 @@ jobs:
       - run: |
           echo "Running tests..."
           npm run test
-
+  build-and-push:
+      docker:
+       - image: cimg/node:16.10
+      steps:
+       - checkout
+       - node/install-packages:
+          pkg-manager: npm
+       - run: |
+          echo "Installing dependencies..."
+          npm install
+       - docker/login:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
+       - run:
+          name: Build and Push Image
+          command: |
+            docker build -t jaxtoh/education-space:node-app v1.0.1 .
+            docker push jaxtoh/education-space:node-app v1.0.1
+   
 workflows:
   simple_workflow:
     jobs:
@@ -30,3 +48,9 @@ workflows:
       - test:
           requires:
             - build
+      - build-and-push:
+          requires:
+            - test
+          filters:
+            branches:
+              only: main      
